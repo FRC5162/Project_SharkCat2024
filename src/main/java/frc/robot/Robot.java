@@ -7,10 +7,15 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import javax.sound.midi.ControllerEventListener;
+
 import edu.wpi.first.hal.HAL;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
-import frc.robot.Subsystems.Drivetrain;;
+import frc.robot.Subsystems.Drivetrain;
+import frc.robot.Constants;
+import frc.robot.Constants.ControllerConfig;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -26,12 +31,12 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
   public static Drivetrain drivetrain;
+
+  public Constants constants;
+  public ControllerConfig controllerConfig;
   
   // Creates a joystick for the driver controller
   private Joystick Driver;
-  
-  // creates an offset that will be used as a dead zone for the controller
-  double deadzone = 0.2;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -45,9 +50,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
 
     // Allows joystick in port 0 on the driverstation to be used as the Driver controller
-    Driver = new Joystick(0);
-    Driver.setYChannel(1);
-    Driver.setXChannel(2);
+    Driver = new Joystick(controllerConfig.DriverPort);
 
     drivetrain = new Drivetrain();
 
@@ -102,22 +105,21 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     //these are basically adding our deadzone to our joysticks in a way that will make them drive the motors
-    double throttledeadzone;
-    double turndeadzone;
 
-    if(Math.abs(Driver.getY()) > deadzone ){
-      throttledeadzone = Math.pow(Driver.getY(), 3);
+
+    if(Math.abs(Driver.getRawAxis(controllerConfig.DriverYAxis)) > constants.deadzone ){
+      controllerConfig.ThrottleSpeed = Math.pow(controllerConfig.DriverYAxis, 3);
     } else{
-      throttledeadzone=0;
+    controllerConfig.ThrottleSpeed=0;
     }
 
-    if(Math.abs(Driver.getX()) > deadzone ){
-      turndeadzone = Math.pow(Driver.getX(), 3);
+    if(Math.abs(Driver.getRawAxis(controllerConfig.DriverXAxis)) > constants.deadzone ){
+      controllerConfig.TurningSpeed = Math.pow(controllerConfig.DriverXAxis, 3);
     }else{
-      turndeadzone = 0;
+      controllerConfig.TurningSpeed = 0;
     }
 
-    drivetrain.arcadeDrive(turndeadzone, -throttledeadzone);
+    drivetrain.arcadeDrive(controllerConfig.TurningSpeed, -controllerConfig.ThrottleSpeed);
   }
   
     
