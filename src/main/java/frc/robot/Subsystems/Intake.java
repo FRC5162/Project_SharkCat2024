@@ -18,10 +18,17 @@ public class Intake extends SubsystemBase {
       //2 neo spark max
       private CANSparkMax IntakeBottom = new CANSparkMax(5, MotorType.kBrushless);
       private CANSparkMax IntakeTop = new CANSparkMax(6, MotorType.kBrushless);
-      private MotorControllerGroup IntakeGroup = new MotorControllerGroup(IntakeBottom, IntakeTop);
 
-      public void IntakeSpeed(Double IntakeSpeed) {
-        IntakeGroup.set(IntakeSpeed);
+      // private MotorControllerGroup IntakeGroup = new MotorControllerGroup(IntakeBottom, IntakeTop);
+
+      public void IntakeBottomSpeed(Double IntakeSpeed) {
+        double invert = 1.0; //set to -1.0 if wrong direction
+        IntakeBottom.set(IntakeSpeed * invert);
+      }
+
+      public void IntakeTopSpeed(Double IntakeSpeed) {
+        double invert = 1.0; //set to -1.0 if wrong direction
+        IntakeTop.set(IntakeSpeed * invert);
       }
 
       // create function to control intake in robot.java

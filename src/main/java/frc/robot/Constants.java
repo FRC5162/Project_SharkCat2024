@@ -7,15 +7,21 @@ package frc.robot;
 /** Add your docs here. */
 public class Constants {
 
-    // creates an offset that will be used as a dead zone for the controller
-    public double deadzone = 0.2;
+    public final static int ArmLimitDIO = 0;
+    public final static double IntakeSpeed = 0.75;
+    public final static double ArmSpeed = 0.5;
 
-    public static class ControllerConfig{
-        public final int DriverPort =  0;
-        public final int DriverYAxis = 1;
-        public final int DriverXAxis = 2;
+    public class ControllerConfig{
+        public final static double deadzone = 0.2;
+        public final static int DriverPort =  0;
+        public final static int DriverYAxis = 1;  //xbox controller left stick y
+        public final static int DriverXAxis = 4;  //xbox controller right stick X
 
-        public double ThrottleSpeed;
-        public double TurningSpeed;
+        public final static int OperPort = 1;
+        public final static int ArmDown = 2; //xbox ltrigger
+        public final static int ArmUp = 3; //xbox rtrigger
+        public final static int IntakeBottom = 1; //xbox left stick y
+        public final static int IntakeTop = 5; //xbox right stick y
+
     }
 }
