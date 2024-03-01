@@ -9,7 +9,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.cameraserver.CameraServer;
 // import digital input library
+import edu.wpi.first.cscore.UsbCamera;
 
 // import javax.sound.midi.ControllerEventListener;
 
@@ -59,6 +61,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    UsbCamera cam = CameraServer.startAutomaticCapture();
+    cam.setResolution(320, 240);
+    cam.setFPS(25);
+
     // Stuff for Autonomous
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
