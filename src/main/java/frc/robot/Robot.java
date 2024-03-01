@@ -9,6 +9,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import java.sql.Driver;
+
+import edu.wpi.first.cameraserver.CameraServer;
+
 // import digital input library
 
 // import javax.sound.midi.ControllerEventListener;
@@ -57,12 +62,18 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
+
+  }
+
   @Override
   public void robotInit() {
     // Stuff for Autonomous
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+
+  
+
 
     // Allows joystick in port 0 on the driverstation to be used as the Driver controller
     Driver = new Joystick(Constants.ControllerConfig.DriverPort);
@@ -114,6 +125,7 @@ public class Robot extends TimedRobot {
       case kDefaultAuto:
       default:
         // Put default auto code here
+        
         break;
     }
   }

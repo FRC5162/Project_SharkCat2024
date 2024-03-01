@@ -8,7 +8,7 @@ package frc.robot;
 public class Constants {
 
     public final static int ArmLimitDIO = 0;
-    public final static double IntakeSpeed = 0.75;
+    public final static double IntakeSpeed = 0.95;
     public final static double ArmSpeed = 0.5;
 
     public class ControllerConfig{

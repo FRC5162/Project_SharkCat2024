@@ -36,7 +36,7 @@ public class Drivetrain extends SubsystemBase {
   // creates an arcadeDrive so that drivetrain motors can be controlled by a joystick
   public void arcadeDrive(double Rotation, double Speed){
   // may need to move around throttle and turnrate/add a subtraction symbol infront of varible name to get it in correct order
-    drivegroup.arcadeDrive(Rotation, Speed, false);
+    drivegroup.arcadeDrive(Rotation,- Speed, false);
   }
 
   
@@ -44,7 +44,7 @@ public class Drivetrain extends SubsystemBase {
   public Drivetrain() {
 
   }
-
+ 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
