@@ -6,32 +6,27 @@ package frc.robot.Subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-import com.revrobotics.CANSparkLowLevel;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class Drivetrain extends SubsystemBase {
 
   // Creates rightside motor controllers & brings them together into a group
-  private CANSparkMax FrontRightMotor = new CANSparkMax(1, MotorType.kBrushless);
-  private CANSparkMax baclrightmotor = new CANSparkMax(2, MotorType.kBrushless);
-  private MotorControllerGroup rightmotorgroup = new MotorControllerGroup(FrontRightMotor, baclrightmotor);
+  private CANSparkMax frontRightMotor = new CANSparkMax(1, MotorType.kBrushless);
+  private CANSparkMax backRightMotor = new CANSparkMax(2, MotorType.kBrushless);
+  //dont use motorcontrollergroup anymore, use follow
+  // private MotorControllerGroup rightmotorgroup = new MotorControllerGroup(frontRightMotor, backRightmotor);
   
   // creates leftside motor controllers & brings them together into a group
-  private CANSparkMax FrontLeftMotor = new CANSparkMax(3, MotorType.kBrushless);
-  private CANSparkMax BackLeftMotor = new CANSparkMax(4, MotorType.kBrushless);
-  private MotorControllerGroup leftmotorgroup = new MotorControllerGroup(FrontLeftMotor, BackLeftMotor);
+  private CANSparkMax frontLeftMotor = new CANSparkMax(3, MotorType.kBrushless);
+  private CANSparkMax backLeftMotor = new CANSparkMax(4, MotorType.kBrushless);
+  //dont use motorcontrollergroup anymore, use follow
+  // private MotorControllerGroup leftmotorgroup = new MotorControllerGroup(FrontLeftMotor, BackLeftMotor);
   double offset;
   
   // brings motors into a drive group
-  public DifferentialDrive drivegroup = new DifferentialDrive(rightmotorgroup, leftmotorgroup);
+  public DifferentialDrive drivegroup = new DifferentialDrive(frontRightMotor, frontLeftMotor); //only control the front motors, the back are followers
   
   // creates an arcadeDrive so that drivetrain motors can be controlled by a joystick
   public void arcadeDrive(double Rotation, double Speed){
@@ -42,7 +37,9 @@ public class Drivetrain extends SubsystemBase {
   
   /** Creates a new Drivetrain. */
   public Drivetrain() {
-
+    // Do this instead of motor controller groups
+    backRightMotor.follow(frontRightMotor);
+    backLeftMotor.follow(frontLeftMotor);
   }
  
   @Override
